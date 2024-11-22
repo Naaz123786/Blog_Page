@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{% static 'blogs/style.css' %}">
+
+</head>
+<body>
+    <header id ="main-navigation">
+        <h1>
+            <a href="{% url 'starting-page' %}">My Blog</a>
+        </h1>
+        <nav class="primary-nav">
+            <a class="first" href="{% url 'read' %}">Read Later Posts</a>
+        
+            <a href="{% url 'posts-page' %}">All Posts</a>
+        </nav>
+    </header>
+
+
+    <section id="welcome">
+        <header>
+            <img src="https://img.freepik.com/free-photo/hiker-going-up-aiguille-du-midi_53876-139593.jpg?w=1060&t=st=1685441839~exp=1685442439~hmac=0beac63a69babba7351a9bb1753cda2be13e89b410639bdbdc4ddb11a76dd385" alt="Vito - The author of This Blog">
+            <h2>My Blog</h2>
+        </header>
+        <p>Hi, I am Naznin and i love to blog about tech and the world!</p>
+    </section>
+
+
+    <div class="center-item">
+        <section id="top-section-posts">
+            <div class="title">
+                <h2>My Latest Thoughts</h2>
+            </div>
+            <div class="angolo-sec-1">
+                <ul>
+                    {% for post in posts %}
+                        {% include "blogs/includes/posts.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        
+        <div class="other-section-post"> 
+            <section id="posts">
+                <div class="title">
+                    <h2>Most View Posts</h2>
+                </div>
+                <div class="angolo">
+                    <ul>
+                        {% for post in view_post %}
+                            {% include "blogs/includes/posts.html" %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="posts">
+                <div class="title">
+                    <h2>Most Likely Posts</h2>
+                </div>
+                <div class="angolo">
+                    <ul>
+                        {% for post in like_post %}
+                            {% include "blogs/includes/posts.html" %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+
+            <section id="posts">
+                <div class="title">
+                    <h2>Most Commented Posts</h2>
+                </div>
+                <div class="angolo">
+                    <ul>
+                        {% for post in comment_post %}
+                            {% include "blogs/includes/posts.html" %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer id="about">
+            <h2>What i do</h2>
+            <p>I love programming,I love to help others and I enjoy exploring new technologies in general! </p>
+            <p>My goal is to keep on growing as developer - and if I could help you do the same, I'd be very happy!</p>
+            <small>
+                Copyright © 2024. All Rights Reserved.
+            </small>
+        </footer>
+
+    </div>
+</body>
+</html>
+

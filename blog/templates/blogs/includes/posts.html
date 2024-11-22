@@ -1,0 +1,32 @@
+{% load static %}
+
+<li>
+    <article class="post">
+        {% if post.slug in session %}
+        <div class="remove">
+            <form action="{% url 'delete' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="page_type" value="{{ post.page_type }}"> 
+                <input type="hidden" name="slug", value="{{ post.slug }}">
+                <button class="RemoveFromRead">Remove From Read Later X</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="add">
+            <form action="{% url 'addtoread' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="page_type" value="{{ post.page_type }}"> 
+                <input type="hidden" name="slug", value="{{ post.slug }}">
+                <button class="AddtoRead">Read Later</button>
+            </form>
+        </div>
+        {% endif %}
+        <a href="posts/{{post.slug}}">
+            <img src=" {{ post.image.url }}" alt="{{ post.excerpt }}" width="300px">
+            <div class="post__content">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content|slice:40}}...</p>
+            </div>
+        </a>
+    </article>
+</li>

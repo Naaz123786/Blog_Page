@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{% static 'blogs/style.css' %}">
+</head>
+<body>
+    <header id ="main-navigation">
+        <h1>
+            <a href="{% url 'starting-page' %}">My Blog</a>
+        </h1>
+        <nav class="primary-nav">
+            <a class="first" href="{% url 'read' %}">Read Later Posts</a>
+    
+            <a href="{% url 'posts-page' %}">All Posts</a>
+        </nav>
+    </header>
+
+    <section id="summary">
+        {% if post_details.slug in session %}
+            <form action="{% url 'delete' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="slug", value="{{ post_details.slug }}">
+                <button class="RemoveFromRead">Remove From Read Later X</button>
+            </form>
+        {% else %}
+            <form action="{% url 'addtoread' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="slug", value="{{ post_details.slug }}">
+                <button class="AddtoRead">Read Later</button>
+            </form>
+        {% endif %}
+
+        <h2>{{ post_details.title }}</h2>
+        <div class="all-tags">
+            <div class="container">
+                <span class="tags-p">tag:</span>
+            </div>
+            <div class="container">            
+                <span class="tag">{{ post_details.caption}}</span>      
+            </div>
+        </div>
+       
+        
+        
+        <article>
+            <img src="{{ post_details.image.url }}" alt="{{ post_details.excerpt }}">
+            <address>By <a href="mailto:{{ post_details.author.e_mail_address}}">{{ post_details.author }}</a></address>
+            <div class="data">
+                Last updated on <time>{{ post_details.date }}</time>
+            </div>
+        </article>
+        <main>
+            <p>{{ post_details.content }}</p>
+        </main>
+    </section>
+    
+    <section class="footer">
+        <div class="CommentSection">
+            <header>
+                <h2>Comment Section</h2>
+            </header>
+            <form action="{{ post_details.title }}" method="POST">
+                {% csrf_token %}
+                <h3 class="form-title">Feel free to leave a review here!</h3>
+                <div class="formcontainer">
+                    <div class="form1">
+                        {{ form.nome_utente.label_tag }}{{ form.nome_utente }}
+                    </div>
+                    <div class="form1">
+                        {{ form.rating.label_tag }}{{ form.rating }}
+                    </div>
+                </div>
+                <div class="form2">
+                        {{ form.commento.label_tag }}
+                        {{ form.commento }}
+                        
+                    <div class="buttondiv">
+                        <button>submit</button>
+                    </div>
+                </div>
+            </form>
+            <h2 class="all-commenttitle">All Comment</h2>
+            <div class="for_comment" style="overflow-y: scroll; height:400px;">
+                <ul>
+                    {% for comment in comments %}
+                        <li>
+                            <article class="comment">
+                                <a href="">
+                                    <div class="comment__content">
+                                        <h3>{{ comment.nome_utente }} </h3>
+                                        <p>Blog name: {{ post_details.title }}</p>
+                                        <p>Rating: {{ comment.rating }}</p>
+                                        <p>Review: {{ comment.commento }}</p>
+                                    </div>
+                                </a>
+                            </article>
+                        </li>   
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <footer class="footer-posts">
+            <p>My blog - Post details page</p>
+        </footer>
+    </section>
+</body>
+</html>
+
+
+
+

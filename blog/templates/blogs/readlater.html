@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{% static 'blogs/style.css' %}">
+
+</head>
+<body>
+    <header id ="main-navigation">
+        <h1>
+            <a href="{% url 'starting-page' %}">
+                My Blog</a>
+        </h1>
+        <nav class="primary-nav">
+            <a class="first" href="{% url 'posts-page' %}">All Posts</a>
+        
+            <a href="{% url 'add-post' %}">Add Post</a>
+        </nav>
+    </header>
+
+    <section id="all-posts">
+        <h2>All Read Later Posts</h2>
+        {% if message %}
+            <h4 class="message">{{message}}</h4>
+        {% endif %}
+        <ul>
+            {% for post in all_posts %}
+                {% include "blogs/includes/posts.html" %}
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>
+
+

@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="{% static 'blogs/style.css' %}">
+
+</head>
+<body>
+    <header id ="main-navigation">
+    <h1>
+        <a href="{% url 'starting-page' %}">My Blog</a>
+    </h1>
+    <nav class="primary-nav">
+        <a class="first" href="{% url 'read' %}">Read Later Posts</a>
+   
+        <a href="{% url 'posts-page' %}">All Posts</a>
+    </nav>
+    </header>
+
+
+    <section class="addposts">
+        <h2 class="Tittle">Add New Posts</h2>
+        <form action="/addpost" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h3 class="tittelin1rstdiv">Tittle information</h3>
+            <div class="titolo"> 
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.excerpt.label_tag }}
+                {{ form.excerpt }}
+                {{ form.slug.label_tag }}
+                {{ form.slug }} 
+            </div>
+            <div class="autore">
+                <h3>Author information</h3>
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+                <div>
+                {{ form.e_mail_address.label_tag }}
+                {{ form.e_mail_address }} 
+                </div>
+            </div>
+            <div class="image">
+                <h3>Upload Image</h3>
+                <div>
+                {{ form.image.label_tag }}
+                {{ form.image }}
+                {{ form.caption.label_tag }}
+                {{ form.caption }}        
+            </div>
+            <div class="content">
+                <h3>Write The Content</h3>
+                <div>
+                    {{ form.content.label_tag }}
+                </div>
+                <div>
+                    {{ form.content }}  
+                </div>
+            </div>
+            <button class="Upload">Upload Post</button>
+        </form>
+    </section>
+    <footer class="Add-footer">
+        <p>My blog - Add New Post</p>
+    </footer>
+</body>
+</html>
